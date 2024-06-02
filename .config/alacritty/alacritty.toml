@@ -1,0 +1,121 @@
+live_config_reload = true
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+decorations = "buttonless"
+option_as_alt = "OnlyLeft"
+dynamic_padding = false
+opacity = 0.95
+padding.x = 20
+padding.y = 10
+dimensions.lines = 25
+dimensions.columns = 90
+
+[font]
+size = 17.0
+normal.family = "Hack Nerd Font"
+normal.style = "Regular"
+
+# actions
+[[keyboard.bindings]]
+action = "CreateNewTab"
+key = "t"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key = "f"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "c"
+mods = "Command|Shift"
+
+# chars
+[[keyboard.bindings]]
+chars = "\u0008"
+key = "h"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u000a"
+key = "j"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u000b"
+key = "k"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u000c"
+key = "l"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0001"
+key = "a"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0004"
+key = "d"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u000e"
+key = "n"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u000f"
+key = "o"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0012"
+key = "r"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0013"
+key = "s"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0014"
+key = "t"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0019"
+key = "y"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001a"
+key = "z"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001c"
+key = "i"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001d"
+key = "]"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001e"
+key = "c"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001f"
+key = "z"
+mods = "Command|Shift"

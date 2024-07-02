@@ -35,6 +35,7 @@ return {
         "rust_analyzer",
         "svelte",
         "tailwindcss",
+        "texlab",
         "tsserver",
       },
     })
@@ -47,6 +48,7 @@ return {
         "goimports",
         "golangci-lint",
         "isort",
+        "latexindent",
         "pylint",
         "prettier",
         "stylua",

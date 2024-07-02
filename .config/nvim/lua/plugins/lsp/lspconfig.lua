@@ -89,6 +89,12 @@ return {
           },
         })
       end,
+      ["texlab"] = function()
+        lspconfig["texlab"].setup({
+          capabilities = capabilities,
+          filetypes = { "tex" },
+        })
+      end,
       ["lua_ls"] = function()
         lspconfig["lua_ls"].setup({
           capabilities = capabilities,

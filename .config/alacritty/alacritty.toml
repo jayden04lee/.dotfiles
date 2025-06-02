@@ -1,3 +1,4 @@
+[general]
 live_config_reload = true
 
 [env]
@@ -7,16 +8,19 @@ TERM = "xterm-256color"
 decorations = "buttonless"
 option_as_alt = "OnlyLeft"
 dynamic_padding = false
-opacity = 0.95
+opacity = 0.93
 padding.x = 20
 padding.y = 10
 dimensions.lines = 25
 dimensions.columns = 90
 
 [font]
-size = 17.0
-normal.family = "Hack Nerd Font"
+size = 17.5
+normal.family = "JetBrainsMono Nerd Font"
 normal.style = "Regular"
+
+[colors.primary]
+background = "#202020"
 
 # actions
 [[keyboard.bindings]]
@@ -34,88 +38,116 @@ action = "Copy"
 key = "c"
 mods = "Command|Shift"
 
-# chars
+# Option (Alt) + h => Left Arrow
+[[keyboard.bindings]]
+key = "h"
+chars = "\u001b[D"
+mods = "Alt"
+
+# Option (Alt) + j => Down Arrow
+[[keyboard.bindings]]
+key = "j"
+mods = "Alt"
+chars = "\u001b[B"
+
+# Option (Alt) + k => Up Arrow
+[[keyboard.bindings]]
+key = "k"
+mods = "Alt"
+chars = "\u001b[A"
+
+# Option (Alt) + l => Right Arrow
+[[keyboard.bindings]]
+key = "l"
+mods = "Alt"
+chars = "\u001b[C"
+
+# CMD-h => CTRL-h
 [[keyboard.bindings]]
 chars = "\u0008"
 key = "h"
 mods = "Command"
 
+# CMD-j => CTRL-j
 [[keyboard.bindings]]
 chars = "\u000a"
 key = "j"
 mods = "Command"
 
+# CMD-k => CTRL-k
 [[keyboard.bindings]]
 chars = "\u000b"
 key = "k"
 mods = "Command"
 
+# CMD-l => CTRL-l
 [[keyboard.bindings]]
 chars = "\u000c"
 key = "l"
 mods = "Command"
 
+# CMD-a => CTRL-a
 [[keyboard.bindings]]
 chars = "\u0001"
 key = "a"
 mods = "Command"
 
+# CMD-d => CTRL-d
 [[keyboard.bindings]]
 chars = "\u0004"
 key = "d"
 mods = "Command"
 
+# CMD-n => CTRL-n
 [[keyboard.bindings]]
 chars = "\u000e"
 key = "n"
 mods = "Command"
 
+# CMD-o => CTRL-o
 [[keyboard.bindings]]
 chars = "\u000f"
 key = "o"
 mods = "Command"
 
+# CMD|Shift-o => CTRL-p
+[[keyboard.bindings]]
+chars = "\u0010"
+key = "o"
+mods = "Command|Shift"
+
+# CMD-r => CTRL-r
 [[keyboard.bindings]]
 chars = "\u0012"
 key = "r"
 mods = "Command"
 
+# CMD-s => CTRL-s
 [[keyboard.bindings]]
 chars = "\u0013"
 key = "s"
 mods = "Command"
 
+# CMD-t => CTRL-t
 [[keyboard.bindings]]
 chars = "\u0014"
 key = "t"
 mods = "Command"
 
+# CMD-y => CTRL-y
 [[keyboard.bindings]]
 chars = "\u0019"
 key = "y"
 mods = "Command"
 
-[[keyboard.bindings]]
-chars = "\u001a"
-key = "z"
-mods = "Command"
-
+# CMD-i => CTRL-\
 [[keyboard.bindings]]
 chars = "\u001c"
 key = "i"
 mods = "Command"
 
-[[keyboard.bindings]]
-chars = "\u001d"
-key = "]"
-mods = "Command"
-
+# CMD-c => CTRL-^
 [[keyboard.bindings]]
 chars = "\u001e"
 key = "c"
 mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u001f"
-key = "z"
-mods = "Command|Shift"

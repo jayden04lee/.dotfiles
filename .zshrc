@@ -1,31 +1,32 @@
-##############
-# Zsh config #
-##############
+################
+# Shell config #
+################
 
-#Neofetch 👾
+#Neofetch
 if [ "$TERM_PROGRAM" != tmux ]; then
   neofetch --ascii --source ~/.config/neofetch/ascii.txt
 fi
 
-#Powerlevel10k 🔟
+#Powerlevel10k
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
 # to customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.config/.p10k.zsh ]] || source ~/.config/.p10k.zsh
 
-#ZSH plugins 📦
+#ZSH plugins
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-#ZSH history 🔄
+#ZSH history
 HISTFILE=$HOME/.zhistory
-SAVEHIST=1000
-HISTSIZE=999
+SAVEHIST=10000
+HISTSIZE=9999
 setopt share_history
 setopt hist_expire_dups_first
 setopt hist_ignore_dups
@@ -34,14 +35,15 @@ setopt hist_verify
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 
-#FZF 🔍
+#FZF
 eval "$(fzf --zsh)"
 
-#Aliases 📝
+#Aliases
 alias dotfiles="git --git-dir=$DOTFILES --work-tree=$HOME"
 alias ls="ls --color"
 alias rm="trash"
 alias remove="command rm"
+alias g++="g++ --std=c++17"
 
 ##########################
 # Dev environment config #
@@ -55,7 +57,14 @@ export NVM_DIR="$HOME/.nvm"
 # Pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+eval "$(pyenv init --path)"
+eval "$(pyenv virtualenv-init -)"
+
+# Go
+export PATH="$PATH:$(go env GOPATH)/bin"
 
 # Rust
 source "$HOME/.cargo/env"
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"

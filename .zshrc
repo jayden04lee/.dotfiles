@@ -19,9 +19,17 @@ fi
 [[ ! -f ~/.config/.p10k.zsh ]] || source ~/.config/.p10k.zsh
 
 #ZSH plugins
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # macOS (Homebrew paths)
+  source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+else
+  # Linux (Cloned into ~/.config/zsh)
+  [[ -f ~/.config/zsh/powerlevel10k/powerlevel10k.zsh-theme ]] && source ~/.config/zsh/powerlevel10k/powerlevel10k.zsh-theme
+  [[ -f ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+  [[ -f ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source ~/.config/zsh/zsh-syntax-highlighting.zsh
+fi
 
 #ZSH history
 HISTFILE=$HOME/.zhistory
@@ -50,21 +58,21 @@ alias g++="g++ --std=c++17"
 ##########################
 
 # NVM
-export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+# export NVM_DIR="$HOME/.nvm"
+#   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+#   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # Pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv virtualenv-init -)"
+# export PYENV_ROOT="$HOME/.pyenv"
+# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init --path)"
+# eval "$(pyenv virtualenv-init -)"
 
 # Go
-export PATH="$PATH:$(go env GOPATH)/bin"
+# export PATH="$PATH:$(go env GOPATH)/bin"
 
 # Rust
-source "$HOME/.cargo/env"
+# source "$HOME/.cargo/env"
 
 # Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+# [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"

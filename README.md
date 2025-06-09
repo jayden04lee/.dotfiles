@@ -18,7 +18,7 @@ tmux source-file ~/.config/tmux/tmux.conf
 source ~/.zshrc
 ```
 
-# Linux
+## Debian
 
 ```shell
 git clone --bare https://github.com/jayd-lee/.dotfiles.git ~/.dotfiles
@@ -45,3 +45,6 @@ source ~/.zprofile
 
 source ~/.zshrc
 ```
+
+## Neovim build from source
+https://github.com/neovim/neovim/blob/master/BUILD.md

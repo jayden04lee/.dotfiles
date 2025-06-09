@@ -890,6 +890,11 @@ require("lazy").setup({
 		},
 	},
 	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		opts = {},
+	},
+	{
 		"christoomey/vim-tmux-navigator",
 		config = function()
 			vim.g.tmux_navigator_disable_when_zoomed = 1

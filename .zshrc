@@ -49,9 +49,11 @@ eval "$(fzf --zsh)"
 #Aliases
 alias dotfiles="git --git-dir=$DOTFILES --work-tree=$HOME"
 alias ls="ls --color"
-alias rm="trash"
-alias remove="command rm"
 alias g++="g++ --std=c++17"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  alias rm="trash"
+  alias remove="command rm"
+fi
 
 ##########################
 # Dev environment config #

@@ -39,9 +39,6 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.config/zsh/zsh
 
 git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
-
 tmux source-file ~/.config/tmux/tmux.conf
 
 source ~/.zprofile

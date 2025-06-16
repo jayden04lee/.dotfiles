@@ -49,6 +49,8 @@ export FZF_CTRL_T_OPTS="
   --walker-skip .git,node_modules,target
   --preview 'bat -n --color=always {}'
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+# Unbind default Ctrl-T
+bindkey -r '^T'
 # Bind Ctrl-F to the fzf file widget
 bindkey '^F' fzf-file-widget
 

@@ -28,7 +28,7 @@ else
   # Linux (Cloned into ~/.config/zsh)
   [[ -f ~/.config/zsh/powerlevel10k/powerlevel10k.zsh-theme ]] && source ~/.config/zsh/powerlevel10k/powerlevel10k.zsh-theme
   [[ -f ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-  [[ -f ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source ~/.config/zsh/zsh-syntax-highlighting.zsh
+  [[ -f ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
 #ZSH history
@@ -45,6 +45,12 @@ bindkey '^[[B' history-search-forward
 
 #FZF
 eval "$(fzf --zsh)"
+export FZF_CTRL_T_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+# Bind Ctrl-F to the fzf file widget
+bindkey '^F' fzf-file-widget
 
 #Aliases
 alias dotfiles="git --git-dir=$DOTFILES --work-tree=$HOME"

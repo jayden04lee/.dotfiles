@@ -1,0 +1,105 @@
+# Options
+background = #202020
+background-opacity = 0.93
+
+font-size = 16
+font-thicken = true
+font-thicken-strength = 100
+
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
+
+macos-titlebar-style = hidden
+macos-icon = glass
+macos-option-as-alt = true
+
+window-decoration = false
+window-padding-x = 10
+window-padding-y = 5
+window-padding-balance = true
+window-height = 25
+window-width = 90
+
+# Keybindings
+keybind = cmd+shift+t=new_window
+keybind = cmd+shift+f=toggle_fullscreen
+keybind = cmd+shift+c=copy_to_clipboard
+
+# Option (Alt) + h => Left Arrow
+keybind = alt+h=csi:D
+
+# Option (Alt) + j => Down Arrow
+keybind = alt+j=csi:B
+
+# Option (Alt) + k => Up Arrow
+keybind = alt+k=csi:A
+
+# Option (Alt) + l => Right Arrow
+keybind = alt+l=csi:C
+
+# CMD-h => CTRL-h
+keybind = cmd+h=text:\x08
+
+# CMD-j => CTRL-j
+keybind = cmd+j=text:\x0a
+
+# CMD-k => CTRL-k
+keybind = cmd+k=text:\x0b
+
+# CMD-l => CTRL-l
+keybind = cmd+l=text:\x0c
+
+# CMD-a => CTRL-a
+keybind = cmd+a=text:\x01
+
+# CMD-d => CTRL-d
+keybind = cmd+d=text:\x04
+
+# CMD-d => CTRL-d
+keybind = cmd+f=text:\x06
+
+# CMD-n => CTRL-n
+keybind = cmd+n=text:\x0e
+
+# CMD-o => CTRL-o
+keybind = cmd+o=text:\x0f
+
+# CMD|Shift-o => CTRL-p
+keybind = cmd+shift+o=text:\x10
+
+# CMD-r => CTRL-r
+keybind = cmd+r=text:\x12
+
+# CMD-s => CTRL-s
+keybind = cmd+s=text:\x13
+
+# CMD-t => CTRL-t
+keybind = cmd+t=text:\x14
+
+# CMD-y => CTRL-y
+keybind = cmd+y=text:\x19
+
+# CMD-i => CTRL-\
+keybind = cmd+i=text:\x1c
+
+# CMD-c => CTRL-^
+keybind = cmd+c=text:\x1e
+
+# Colorscheme
+palette = 0=#181818
+palette = 1=#ab4642
+palette = 2=#a1b56c
+palette = 3=#f7ca88
+palette = 4=#7cafc2
+palette = 5=#ba8baf
+palette = 6=#86c1b9
+palette = 7=#d8d8d8
+palette = 8=#585858
+palette = 9=#dc9656
+palette = 10=#a1b56c
+palette = 11=#f7ca88
+palette = 12=#7cafc2
+palette = 13=#ba8baf
+palette = 14=#a16946
+palette = 15=#f8f8f8

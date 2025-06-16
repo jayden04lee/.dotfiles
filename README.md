@@ -27,7 +27,7 @@ git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout -f
 
 sudo apt update && sudo xargs -a ~/.config/Aptfile apt install -y
 
-chsh -s $(which zsh)
+sudo chsh $(whoami) -s $(which zsh)
 
 mkdir -p ~/.config/zsh
 
@@ -39,6 +39,9 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.config/zsh/zsh
 
 git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
 tmux source-file ~/.config/tmux/tmux.conf
 
 source ~/.zprofile
@@ -48,3 +51,11 @@ source ~/.zshrc
 
 ## Neovim build from source
 https://github.com/neovim/neovim/blob/master/BUILD.md
+```shell
+sudo apt-get install ninja-build gettext cmake curl build-essential
+git clone https://github.com/neovim/neovim
+cd neovim
+git checkout stable
+make CMAKE_BUILD_TYPE=RelWithDebInfo
+cd build && cpack -G DEB && sudo dpkg -i nvim-linux-x86_64.deb
+```

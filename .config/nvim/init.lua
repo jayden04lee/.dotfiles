@@ -151,7 +151,8 @@ vim.keymap.set("n", "<leader>wK", "<C-w>K", { desc = "Move window far up" })
 
 -- indentation with 'i' when line is empty
 function IndentWithI()
-	if vim.fn.empty(vim.fn.getline(".")) == 1 then
+	local line = vim.fn.getline(".")
+	if line:match("^%s*$") then
 		return '"_cc'
 	else
 		return "i"
@@ -649,6 +650,8 @@ require("lazy").setup({
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
+				-- "gofmt",
+				-- "prettierd",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -755,40 +758,21 @@ require("lazy").setup({
 			fuzzy = { implementation = "lua" },
 			-- Shows a signature help window while you type arguments for a function
 			signature = { enabled = true },
-		},
-		config = function(_, opts)
-			local has_words_before = function()
-				local col = vim.api.nvim_win_get_cursor(0)[2]
-				if col == 0 then
-					return false
-				end
-				local line = vim.api.nvim_get_current_line()
-				return line:sub(col, col):match("%s") == nil
-			end
-			opts.keymap = {
+			keymap = {
 				preset = "none",
 				-- Ctrl-i (see alacritty.toml) to show suggestions
 				["<C-\\>"] = { "show", "hide", "fallback" },
 				-- Navigate next/prev suggestion
 				["<C-j>"] = { "select_next", "fallback" },
 				["<C-k>"] = { "select_prev", "fallback" },
-				-- If completion hasn't been triggered yet, insert the first suggestion; if it has, cycle to the next suggestion.
-				["<Tab>"] = {
-					function(cmp)
-						if has_words_before() then
-							return cmp.insert_next()
-						end
-					end,
-					-- "select_and_accept"
-					"fallback",
-				},
-				-- Navigate to the previous suggestion or cancel completion if currently on the first one.
-				["<S-Tab>"] = { "insert_prev" },
 				-- Accept suggestion (closes window)
+				["<Tab>"] = { "accept", "fallback" },
 				["<CR>"] = { "accept", "fallback" },
-			}
-			require("blink.cmp").setup(opts)
-		end,
+			},
+		},
+		-- config = function(_, opts)
+		-- 	require("blink.cmp").setup(opts)
+		-- end,
 	},
 
 	{
@@ -1000,6 +984,7 @@ require("lazy").setup({
 						["p"] = "paste_from_clipboard",
 						["x"] = "cut_to_clipboard",
 						["y"] = "copy_to_clipboard",
+						["f"] = "noop",
 						["<tab>"] = function(state)
 							local node = state.tree:get_node()
 							if node.type == "directory" then

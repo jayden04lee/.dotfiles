@@ -126,6 +126,9 @@ vim.keymap.set("n", "p", '"0p', { noremap = true })
 -- "x" does not copy to register
 vim.keymap.set("n", "x", '"_x')
 
+-- rounded border for hover docs
+vim.keymap.set("n", "K", '<cmd>lua vim.lsp.buf.hover({border = "rounded"})<cr>')
+
 -- Make delete operations use the "d" register
 vim.keymap.set({ "n", "v" }, "d", '"dd', { noremap = true })
 vim.keymap.set("n", "dd", '"ddd', { noremap = true })
@@ -650,7 +653,8 @@ require("lazy").setup({
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
-				-- "gofmt",
+				-- "gofumpt",
+				-- "black",
 				-- "prettierd",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
@@ -809,6 +813,8 @@ require("lazy").setup({
 			-- - sd'   - [S]urround [D]elete [']quotes
 			-- - sr)'  - [S]urround [R]eplace [)] [']
 			require("mini.surround").setup()
+			vim.o.winbar = "%#MiniStatuslineFilename#%=%f%="
+			vim.api.nvim_set_hl(0, "MiniStatuslineFilename", { fg = "#d4be98", bg = "#282828" })
 		end,
 	},
 	{

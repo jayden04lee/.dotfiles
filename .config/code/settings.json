@@ -1,0 +1,24 @@
+{
+  // Editor Settings
+  "editor.fontSize": 15,
+  "editor.fontFamily": "JetBrainsMono Nerd Font",
+  "editor.fontWeight": "650",
+  "editor.minimap.enabled": false,
+  "editor.formatOnSave": true,
+  "editor.cursorBlinking": "solid",
+  "editor.emptySelectionClipboard": false,
+  // Window settings
+  "window.density.editorTabHeight": "compact",
+  // Explorer settings
+  "explorer.compactFolders": false,
+  // files
+  "files.insertFinalNewline": false,
+  "files.restoreUndoStack": true,
+  // Misc
+  "workbench.startupEditor": "terminal",
+  "workbench.tips.enabled": false,
+  "breadcrumbs.enabled": false,
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  }
+}

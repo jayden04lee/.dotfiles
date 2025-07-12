@@ -1,3 +1,8 @@
+if vim.g.vscode then
+	dofile(vim.fn.stdpath("config") .. "/code.lua")
+	return
+end
+
 -------------------------------------------------------------------------------
 --[[ Options ]]
 -- See `:help vim.o`
@@ -92,6 +97,18 @@ vim.o.cmdheight = 0
 -- line at column 80
 vim.o.colorcolumn = "80"
 
+vim.g.clipboard = {
+	name = "OSC 52",
+	copy = {
+		["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+		["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+	},
+	paste = {
+		["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+		["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+	},
+}
+
 --------------------------------------------------------------------------------
 --[[ Keymaps ]]
 -- See `:help vim.keymap.set()`
@@ -111,11 +128,15 @@ vim.keymap.set("n", "<C-a>", "gg<S-v>G")
 vim.keymap.set({ "v" }, "J", ":m '>+1<CR>gv-gv")
 vim.keymap.set({ "v" }, "K", ":m '<-2<CR>gv-gv")
 
--- Ctrl-Shift o (see alacritty.toml) to jump forward in jumplist
-vim.keymap.set("n", "<C-p>", "<C-i>", { noremap = true })
+-- Copy to system copy register
+vim.keymap.set("v", "<C-c>", '"+y')
 
--- Command c (see alacritty.toml) to copy to system copy register
-vim.keymap.set("v", "<C-^>", '"+y')
+-- Remap visual block mode to Ctrl+Shift+V
+vim.keymap.set("n", "<C-S-v>", "<C-v>", { noremap = true })
+
+-- Paste from system copy register
+vim.keymap.set("n", "<C-v>", '"+p', { noremap = true })
+vim.keymap.set("i", "<C-v>", "<C-r>+", { noremap = true })
 
 -- Visual mode paste without overwriting yank register
 vim.keymap.set("x", "p", 'd"0P', { noremap = true })
@@ -125,6 +146,11 @@ vim.keymap.set("n", "p", '"0p', { noremap = true })
 
 -- "x" does not copy to register
 vim.keymap.set("n", "x", '"_x')
+
+-- rounded border for hover docs
+vim.keymap.set("n", "K", function()
+	vim.lsp.buf.hover({ border = "rounded" })
+end, {})
 
 -- Make delete operations use the "d" register
 vim.keymap.set({ "n", "v" }, "d", '"dd', { noremap = true })
@@ -139,15 +165,15 @@ vim.keymap.set("n", "C", '"cC', { noremap = true })
 vim.keymap.set("n", '"cp', '"cp', { noremap = true })
 
 -- window management
-vim.keymap.set("n", "<leader>w|", "<C-w>v", { desc = "Split window vertically" })
-vim.keymap.set("n", "<leader>w_", "<C-w>s", { desc = "Split window horizontally" })
-vim.keymap.set("n", "<leader>we", "<C-w>=", { desc = "Make splits equal size" })
-vim.keymap.set("n", "<leader>wx", "<C-w>c", { desc = "Close current split" })
-
-vim.keymap.set("n", "<leader>wH", "<C-w>H", { desc = "Move window far left" })
-vim.keymap.set("n", "<leader>wL", "<C-w>L", { desc = "Move window far right" })
-vim.keymap.set("n", "<leader>wJ", "<C-w>J", { desc = "Move window far down" })
-vim.keymap.set("n", "<leader>wK", "<C-w>K", { desc = "Move window far up" })
+-- vim.keymap.set("n", "<leader>w|", "<C-w>v", { desc = "Split window vertically" })
+-- vim.keymap.set("n", "<leader>w_", "<C-w>s", { desc = "Split window horizontally" })
+-- vim.keymap.set("n", "<leader>we", "<C-w>=", { desc = "Make splits equal size" })
+-- vim.keymap.set("n", "<leader>wx", "<C-w>c", { desc = "Close current split" })
+--
+-- vim.keymap.set("n", "<leader>wH", "<C-w>H", { desc = "Move window far left" })
+-- vim.keymap.set("n", "<leader>wL", "<C-w>L", { desc = "Move window far right" })
+-- vim.keymap.set("n", "<leader>wJ", "<C-w>J", { desc = "Move window far down" })
+-- vim.keymap.set("n", "<leader>wK", "<C-w>K", { desc = "Move window far up" })
 
 -- indentation with 'i' when line is empty
 function IndentWithI()
@@ -176,6 +202,88 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+-- Java LSP
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	pattern = "java",
+-- 	callback = function()
+-- 		local home = os.getenv("HOME")
+-- 		local workspace_path = home .. "/.local/share/nvim/jdtls-workspace/"
+-- 		local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+-- 		local workspace_dir = workspace_path .. project_name
+--
+-- 		local config = {
+-- 			-- The command that starts the language server
+-- 			-- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
+-- 			cmd = {
+-- 				-- "/usr/lib/jvm/java-17-openjdk/bin/java", -- or '/path/to/java17_or_newer/bin/java'
+-- 				-- depends on if `java` is in your $PATH env variable and if it points to the right version.
+-- 				"java",
+-- 				"-Declipse.application=org.eclipse.jdt.ls.core.id1",
+-- 				"-Dosgi.bundles.defaultStartLevel=4",
+-- 				"-Declipse.product=org.eclipse.jdt.ls.core.product",
+-- 				"-Dlog.protocol=true",
+-- 				"-Dlog.level=ALL",
+-- 				"-Xmx1g",
+-- 				"--add-modules=ALL-SYSTEM",
+-- 				"--add-opens",
+-- 				"java.base/java.util=ALL-UNNAMED",
+-- 				"-javaagent:" .. home .. "/.local/share/nvim/mason/packages/jdtls/lombok.jar",
+-- 				"-jar",
+-- 				-- "/Users/jaydenlee/.local/share/nvim/mason/packages/jdtls/plugins",
+-- 				vim.fn.glob(
+-- 					home .. "/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"
+-- 				),
+-- 				-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                       ^^^^^^^^^^^^^^
+-- 				-- Must point to the                                                     Change this to
+-- 				-- eclipse.jdt.ls installation                                           the actual version
+-- 				"-configuration",
+-- 				home .. "/.local/share/nvim/mason/packages/jdtls/config_mac",
+-- 				-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        ^^^^^^
+-- 				-- Must point to the                      Change to one of `linux`, `win` or `mac`
+-- 				-- eclipse.jdt.ls installation            Depending on your system.
+-- 				-- See `data directory configuration` section in the README
+-- 				"-data",
+-- 				workspace_dir,
+-- 			},
+-- 			-- This is the default if not provided, you can remove it. Or adjust as needed.
+-- 			-- One dedicated LSP server & client will be started per unique root_dir
+-- 			root_dir = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew" }),
+--
+-- 			-- Here you can configure eclipse.jdt.ls specific settings
+-- 			-- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
+-- 			-- for a list of options
+-- 			settings = {
+-- 				java = {
+-- 					format = {
+-- 						enabled = true,
+-- 						settings = {
+-- 							profile = "GoogleStyle",
+-- 						},
+-- 					},
+-- 					saveActions = {
+-- 						organizeImports = true,
+-- 					},
+-- 				},
+-- 			},
+--
+-- 			-- Language server `initializationOptions`
+-- 			-- You need to extend the `bundles` with paths to jar files
+-- 			-- if you want to use additional eclipse.jdt.ls plugins.
+-- 			--
+-- 			-- See https://github.com/mfussenegger/nvim-jdtls#java-debug-installation
+-- 			--
+-- 			-- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
+-- 			init_options = {
+-- 				bundles = {},
+-- 			},
+-- 		}
+-- 		-- This starts a new client & server,
+-- 		-- or attaches to an existing client & server depending on the `root_dir`.
+-- 		require("jdtls").start_or_attach(config)
+-- 	end,
+-- })
+
+vim.keymap.set("n", "<leader>ji", "<Cmd>lua require'jdtls'.organize_imports()<CR>", { desc = "Organize Imports" })
 --------------------------------------------------------------------------------
 --[[ Lazy ]]
 -- See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -238,6 +346,7 @@ require("lazy").setup({
 				changedelete = { text = "~" },
 			},
 		},
+		enabled = not vim.g.vscode,
 	},
 
 	{ -- Useful plugin to show you pending keybinds.
@@ -299,6 +408,7 @@ require("lazy").setup({
 				{ "<leader>=", group = "[=] Format buffer" },
 			},
 		},
+		enabled = not vim.g.vscode,
 	},
 
 	{ -- Fuzzy Finder (files, lsp, etc)
@@ -397,6 +507,7 @@ require("lazy").setup({
 				builtin.find_files({ cwd = vim.fn.stdpath("config") })
 			end, { desc = "[F]ind [N]eovim files" })
 		end,
+		enabled = not vim.g.vscode,
 	},
 
 	-- LSP Plugins
@@ -411,6 +522,7 @@ require("lazy").setup({
 				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
 			},
 		},
+		enabled = not vim.g.vscode,
 	},
 	{
 		-- Main LSP Configuration
@@ -619,17 +731,18 @@ require("lazy").setup({
 			--  - settings (table): Override the default settings passed when initializing the server.
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local servers = {
-				-- clangd = {},
-				-- gopls = {},
-				-- pyright = {},
-				-- rust_analyzer = {},
+				clangd = {},
+				gopls = {},
+				pyright = {},
+				rust_analyzer = {},
+				intelephense = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
 				-- Some languages (like typescript) have entire language plugins that can be useful:
 				--    https://github.com/pmizio/typescript-tools.nvim
 				--
 				-- But for many setups, the LSP (`ts_ls`) will work just fine
-				-- ts_ls = {},
+				ts_ls = {},
 
 				lua_ls = {
 					-- cmd = { ... },
@@ -649,9 +762,14 @@ require("lazy").setup({
 
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
-				"stylua", -- Used to format Lua code
-				-- "gofmt",
-				-- "prettierd",
+				"stylua",
+				"gofumpt",
+				"black",
+				"prettierd",
+				"google-java-format",
+				"tailwindcss-language-server",
+				"eslint-lsp",
+				-- "clang-format",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -670,8 +788,22 @@ require("lazy").setup({
 				},
 			})
 		end,
+		enabled = not vim.g.vscode,
 	},
-
+	{
+		"nvimtools/none-ls.nvim",
+		event = "VeryLazy",
+		opts = function()
+			local null_ls = require("null-ls")
+			return {
+				sources = {
+					null_ls.builtins.formatting.prettierd,
+				},
+			}
+		end,
+		enabled = not vim.g.vscode,
+	},
+	{ "mfussenegger/nvim-jdtls", enabled = not vim.g.vscode },
 	{ -- Autoformat
 		"stevearc/conform.nvim",
 		event = { "BufWritePre" },
@@ -704,6 +836,8 @@ require("lazy").setup({
 			end,
 			formatters_by_ft = {
 				lua = { "stylua" },
+				c = { "clang-format" },
+				cpp = { "clang-format" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
@@ -711,6 +845,7 @@ require("lazy").setup({
 				-- javascript = { "prettierd", "prettier", stop_after_first = true },
 			},
 		},
+		enabled = not vim.g.vscode,
 	},
 
 	{ -- Autocompletion
@@ -760,21 +895,20 @@ require("lazy").setup({
 			signature = { enabled = true },
 			keymap = {
 				preset = "none",
-				-- Ctrl-i (see alacritty.toml) to show suggestions
-				["<C-\\>"] = { "show", "hide", "fallback" },
+				-- TODO: Show suggestions
+				-- ["<C-i>"] = { "show", "hide", "fallback" },
 				-- Navigate next/prev suggestion
 				["<C-j>"] = { "select_next", "fallback" },
 				["<C-k>"] = { "select_prev", "fallback" },
 				-- Accept suggestion (closes window)
 				["<Tab>"] = { "accept", "fallback" },
-				["<CR>"] = { "accept", "fallback" },
 			},
 		},
 		-- config = function(_, opts)
 		-- 	require("blink.cmp").setup(opts)
 		-- end,
+		enabled = not vim.g.vscode,
 	},
-
 	{
 		"eddyekofo94/gruvbox-flat.nvim",
 		priority = 1000, -- Make sure to load this before all the other start plugins.
@@ -784,6 +918,7 @@ require("lazy").setup({
 			vim.g.gruvbox_theme = { NormalFloat = { bg = "none" } }
 			vim.cmd.colorscheme("gruvbox-flat")
 		end,
+		enabled = not vim.g.vscode,
 	},
 
 	-- Highlight todo, notes, etc in comments
@@ -792,6 +927,7 @@ require("lazy").setup({
 		event = "VimEnter",
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = { signs = false },
+		enabled = not vim.g.vscode,
 	},
 
 	{ -- Collection of various small independent plugins/modules
@@ -809,6 +945,8 @@ require("lazy").setup({
 			-- - sd'   - [S]urround [D]elete [']quotes
 			-- - sr)'  - [S]urround [R]eplace [)] [']
 			require("mini.surround").setup()
+			vim.o.winbar = "%#MiniStatuslineFilename#%=%f%="
+			vim.api.nvim_set_hl(0, "MiniStatuslineFilename", { fg = "#d4be98", bg = "#282828" })
 		end,
 	},
 	{
@@ -833,6 +971,7 @@ require("lazy").setup({
 				extensions = { "neo-tree", "lazy" },
 			})
 		end,
+		enabled = not vim.g.vscode,
 	},
 	{ -- Highlight, edit, and navigate code
 		"nvim-treesitter/nvim-treesitter",
@@ -843,19 +982,26 @@ require("lazy").setup({
 			ensure_installed = {
 				"bash",
 				"c",
+				"cpp",
 				"diff",
+				"go",
 				"html",
+				"java",
+				"javascript",
 				"lua",
 				"luadoc",
 				"markdown",
 				"markdown_inline",
+				"python",
 				"query",
+				"rust",
+				"typescript",
 				"vim",
 				"vimdoc",
 			},
 			auto_install = true,
 			highlight = {
-				enable = true,
+				enable = not vim.g.vscode,
 				-- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
 				--  If you are experiencing weird indenting issues, add the language to
 				--  the list of additional_vim_regex_highlighting and disabled languages for indent.
@@ -883,6 +1029,7 @@ require("lazy").setup({
 		config = function()
 			vim.g.tmux_navigator_disable_when_zoomed = 1
 		end,
+		enabled = not vim.g.vscode,
 	},
 	{
 		"mbbill/undotree",
@@ -890,6 +1037,7 @@ require("lazy").setup({
 			vim.g.undotree_WindowLayout = 3 -- tree on right side
 			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 		end,
+		enabled = not vim.g.vscode,
 	},
 	{
 		"ThePrimeagen/harpoon",
@@ -920,6 +1068,7 @@ require("lazy").setup({
 				end)
 			end
 		end,
+		enabled = not vim.g.vscode,
 	},
 	{
 		"pogyomo/submode.nvim",
@@ -953,6 +1102,7 @@ require("lazy").setup({
 				})
 			end
 		end,
+		enabled = not vim.g.vscode,
 	},
 	{
 		"nvim-neo-tree/neo-tree.nvim",
@@ -975,12 +1125,36 @@ require("lazy").setup({
 		},
 		opts = {
 			filesystem = {
+				commands = {
+					avante_add_files = function(state)
+						local node = state.tree:get_node()
+						local filepath = node:get_id()
+						local relative_path = require("avante.utils").relative_path(filepath)
+
+						local sidebar = require("avante").get()
+
+						local open = sidebar:is_open()
+						-- ensure avante sidebar is open
+						if not open then
+							require("avante.api").ask()
+							sidebar = require("avante").get()
+						end
+
+						sidebar.file_selector:add_selected_file(relative_path)
+
+						-- remove neo tree buffer
+						if not open then
+							sidebar.file_selector:remove_selected_file("neo-tree filesystem [1]")
+						end
+					end,
+				},
 				window = {
 					width = 32,
 					mappings = {
 						["<C-d>"] = "delete",
 						["<C-n>"] = "add",
 						["<C-r>"] = "rename",
+						["a"] = "avante_add_files",
 						["p"] = "paste_from_clipboard",
 						["x"] = "cut_to_clipboard",
 						["y"] = "copy_to_clipboard",
@@ -1013,6 +1187,19 @@ require("lazy").setup({
 				},
 			},
 		},
+		enabled = not vim.g.vscode,
+	},
+	{
+		"supermaven-inc/supermaven-nvim",
+		config = function()
+			require("supermaven-nvim").setup({
+				keymaps = {
+					accept_suggestion = "<Right>",
+					clear_suggestion = "<Left>",
+				},
+			})
+		end,
+		enabled = not vim.g.vscode,
 	},
 }, {
 	ui = {

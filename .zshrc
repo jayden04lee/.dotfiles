@@ -1,10 +1,6 @@
-################
-# Shell config #
-################
-
 #Neofetch
-if [ "$TERM_PROGRAM" != tmux ]; then
-  neofetch --ascii --source ~/.config/neofetch/ascii.txt
+if [ "$TERM_PROGRAM" != "tmux" ] && [ "$TERM_PROGRAM" != "vscode" ]; then
+    neofetch --ascii --source ~/.config/neofetch/ascii.txt
 fi
 
 #Powerlevel10k
@@ -45,9 +41,14 @@ bindkey '^[[B' history-search-forward
 
 #FZF
 eval "$(fzf --zsh)"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  BAT_CMD="bat"
+else
+  BAT_CMD="batcat"
+fi
 export FZF_CTRL_T_OPTS="
   --walker-skip .git,node_modules,target
-  --preview 'bat -n --color=always {}'
+  --preview '$BAT_CMD -n --color=always {}'
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 # Unbind default Ctrl-T
 bindkey -r '^T'
@@ -57,32 +58,13 @@ bindkey '^F' fzf-file-widget
 #Aliases
 alias dotfiles="git --git-dir=$DOTFILES --work-tree=$HOME"
 alias ls="ls --color"
-alias g++="g++ --std=c++17"
 if [[ "$OSTYPE" == "darwin"* ]]; then
   alias rm="trash"
   alias remove="command rm"
 fi
 
-##########################
-# Dev environment config #
-##########################
+#Ghostty
+TERM=xterm-256color
 
-# NVM
-# export NVM_DIR="$HOME/.nvm"
-#   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-#   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
-# Pyenv
-# export PYENV_ROOT="$HOME/.pyenv"
-# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-# eval "$(pyenv init --path)"
-# eval "$(pyenv virtualenv-init -)"
-
-# Go
-# export PATH="$PATH:$(go env GOPATH)/bin"
-
-# Rust
-# source "$HOME/.cargo/env"
-
-# Generated for envman. Do not edit.
-# [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+#Local Shell Config
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local

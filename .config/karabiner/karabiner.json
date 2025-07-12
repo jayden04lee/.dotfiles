@@ -1,0 +1,1268 @@
+{
+  "profiles": [
+    {
+      "complex_modifications": {
+        "rules": [
+          {
+            "description": "Swap Left Ctrl ↔ Left Cmd (Built-in keyboard only)",
+            "manipulators": [
+              {
+                "type": "basic",
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [{ "is_built_in_keyboard": true }]
+                  }
+                ],
+                "from": {
+                  "key_code": "left_command",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "left_control" }]
+              },
+              {
+                "type": "basic",
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [{ "is_built_in_keyboard": true }]
+                  }
+                ],
+                "from": {
+                  "key_code": "left_control",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "left_command" }]
+              }
+            ]
+          },
+          {
+            "description": "Caps Lock → Escape",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "caps_lock",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "escape" }],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Control + Left Click → Command + Left Click (Open link in new tab)",
+            "manipulators": [
+              {
+                "from": {
+                  "modifiers": { "mandatory": ["control"] },
+                  "pointing_button": "button1"
+                },
+                "to": [
+                  {
+                    "modifiers": ["command"],
+                    "pointing_button": "button1"
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+Left → Option+Left (Jump word left)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "left_arrow",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "left_arrow",
+                    "modifiers": ["option"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+Shift+Left → Option+Shift+Left (Select word left)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "left_arrow",
+                  "modifiers": {
+                    "mandatory": ["control", "shift"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "left_arrow",
+                    "modifiers": ["option", "shift"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+Right → Option+Right (Jump word right)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "right_arrow",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "right_arrow",
+                    "modifiers": ["option"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+Shift+Right → Option+Shift+Right (Select word right)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "right_arrow",
+                  "modifiers": {
+                    "mandatory": ["control", "shift"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "right_arrow",
+                    "modifiers": ["option", "shift"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+Backspace → Option+Backspace (Delete word left)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "delete_or_backspace",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "delete_or_backspace",
+                    "modifiers": ["option"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+Delete → Option+Delete (Delete word right)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "delete_forward",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "delete_forward",
+                    "modifiers": ["option"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+Enter → Cmd+Enter",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "return_or_enter",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "return_or_enter",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+Shift+Enter → Cmd+Shift+Enter",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "return_or_enter",
+                  "modifiers": {
+                    "mandatory": ["control", "shift"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "return_or_enter",
+                    "modifiers": ["command", "shift"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+A → Cmd+A (Select All)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "a",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "a",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+B → Cmd+B (Bold)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "b",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "b",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Left Ctrl+C → Cmd+C (Copy)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "c",
+                  "modifiers": {
+                    "mandatory": ["left_control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "c",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+F → Cmd+F (Find)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "f",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "f",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+I → Cmd+I (Italic)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "i",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "i",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+K → Cmd+K",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "k",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "k",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+N → Cmd+N (New)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "n",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "n",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+O → Cmd+O (Open)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "o",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "o",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+P → Cmd+P (Print / Command Palette)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "p",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "p",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+R → Cmd+R (Reload / Refresh)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "r",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "r",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+S → Cmd+S (Save)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "s",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "s",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+T → Cmd+T (New Tab)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "t",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "t",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+U → Cmd+U (Underline)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "u",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "u",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+V → Cmd+V (Paste)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "v",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "v",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+W → Cmd+W (Close Tab / Window)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "w",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "w",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+X → Cmd+X (Cut)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "x",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "x",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+Y → Cmd+Y (Redo / History)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "y",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "y",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+Z → Cmd+Z (Undo)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.mitchellh\\.ghostty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "z",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "z",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+/ → Cmd+/ (Toggle Comment) [+Terminal Emulators]",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.jetbrains",
+                      "^com\\.microsoft\\.VSCode$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "^com\\.google\\.antigravity$"
+                    ],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "slash",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "slash",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+L → Cmd+L (Focus Address Bar) [Web Browsers]",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.google\\.chrome$",
+                      "^com\\.google\\.Chrome$",
+                      "^org\\.mozilla\\.firefox$",
+                      "^org\\.mozilla\\.nightly$",
+                      "^com\\.brave\\.Browser$",
+                      "^com\\.apple\\.Safari$"
+                    ],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "l",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "l",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Alt+Tab → Cmd+Tab (Switch Tabs) [except Remote Desktop]",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [],
+                    "file_paths": ["Chrome Remote Desktop\\.app"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "tab",
+                  "modifiers": {
+                    "mandatory": ["option"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "tab",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+, → Cmd+PageUp (Previous Tab) [Web Browsers]",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.google\\.chrome$",
+                      "^com\\.google\\.Chrome$",
+                      "^org\\.mozilla\\.firefox$",
+                      "^org\\.mozilla\\.nightly$",
+                      "^com\\.brave\\.Browser$",
+                      "^com\\.apple\\.Safari$"
+                    ],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "comma",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "page_up",
+                    "modifiers": ["control"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+. → Cmd+PageDown (Next Tab) [Web Browsers]",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.google\\.chrome$",
+                      "^com\\.google\\.Chrome$",
+                      "^org\\.mozilla\\.firefox$",
+                      "^org\\.mozilla\\.nightly$",
+                      "^com\\.brave\\.Browser$",
+                      "^com\\.apple\\.Safari$"
+                    ],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "period",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "page_down",
+                    "modifiers": ["control"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+Shift+, → Cmd+Shift+PageUp (Move Tab Left) [Web Browsers]",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.google\\.chrome$",
+                      "^com\\.google\\.Chrome$",
+                      "^org\\.mozilla\\.firefox$",
+                      "^org\\.mozilla\\.nightly$",
+                      "^com\\.brave\\.Browser$",
+                      "^com\\.apple\\.Safari$"
+                    ],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "comma",
+                  "modifiers": {
+                    "mandatory": ["control", "shift"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "page_up",
+                    "modifiers": ["control", "shift"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+Shift+. → Cmd+Shift+PageDown (Move Tab Right) [Web Browsers]",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.google\\.chrome$",
+                      "^com\\.google\\.Chrome$",
+                      "^org\\.mozilla\\.firefox$",
+                      "^org\\.mozilla\\.nightly$",
+                      "^com\\.brave\\.Browser$",
+                      "^com\\.apple\\.Safari$"
+                    ],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "period",
+                  "modifiers": {
+                    "mandatory": ["control", "shift"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "page_down",
+                    "modifiers": ["control", "shift"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+; → Cmd+Shift+A (Search Tabs) [Chrome]",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.google\\.chrome$",
+                      "^com\\.google\\.Chrome$",
+                      "^org\\.mozilla\\.firefox$",
+                      "^org\\.mozilla\\.nightly$",
+                      "^com\\.brave\\.Browser$",
+                      "^com\\.apple\\.Safari$"
+                    ],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "semicolon",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "a",
+                    "modifiers": ["command", "shift"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          }
+        ]
+      },
+      "devices": [
+        {
+          "identifiers": {
+            "is_keyboard": true,
+            "is_pointing_device": true,
+            "product_id": 53344,
+            "vendor_id": 13364
+          },
+          "ignore": false,
+          "ignore_vendor_events": true,
+          "manipulate_caps_lock_led": false
+        }
+      ],
+      "name": "Default profile",
+      "selected": true,
+      "virtual_hid_keyboard": {
+        "country_code": 0,
+        "keyboard_type_v2": "ansi"
+      }
+    }
+  ]
+}
